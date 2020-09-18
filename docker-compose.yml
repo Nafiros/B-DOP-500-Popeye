@@ -1,0 +1,89 @@
+# ┌┬┐┌─┐┌─┐┬┌─┌─┐┬─┐   ┌─┐┌─┐┌┬┐┌─┐┌─┐┌─┐┌─┐     ┬ ┬┌┬┐┬  
+#  │││ ││  ├┴┐├┤ ├┬┘───│  │ ││││├─┘│ │└─┐├┤      └┬┘││││  
+# ─┴┘└─┘└─┘┴ ┴└─┘┴└─   └─┘└─┘┴ ┴┴  └─┘└─┘└─┘  o   ┴ ┴ ┴┴─┘
+
+version: '3'
+
+# NETWORKS
+
+networks: 
+    poll-tier:
+        name: poll-tier
+    result-tier:
+        name: result-tier
+    back-tier:
+        name: back-tier
+
+
+# VOLUMES
+
+volumes: 
+    db-data:
+
+
+# SERVICES
+
+services:
+
+    # Poll service for Python App
+    poll:
+        container_name: poll
+        build: ./poll/
+        restart: always
+        ports:
+            - "5000:80"
+        networks: 
+            - poll-tier
+        links: 
+            - redis
+            - db
+        environment: 
+            - 0.0.0.0
+    # Redis service
+    redis:
+        container_name: redis
+        image: redis:alpine
+        restart: always
+        ports:
+            - "6379:6379"
+        networks: 
+            - poll-tier
+            - back-tier
+    # Worker service for java App
+    worker:
+        container_name: worker
+        build: ./worker/
+        restart: always
+        networks: 
+            - back-tier
+        environment: 
+            - 0.0.0.0
+    # DB service for PostgreSQL database
+    db:
+        container_name: db
+        image: postgres
+        restart: always
+        networks: 
+            - result-tier
+            - back-tier
+        volumes: 
+            - db-data:/var/lib/postgresql/data
+            - ./:/docker-entrypoint-initdb.d/
+        environment:
+            - 0.0.0.0
+        environment: 
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: root
+    # Result service for Node.js services
+    result:
+        container_name: result
+        build: ./result/
+        restart: always
+        ports:
+            - "5001:80"
+        networks: 
+            - result-tier
+        environment: 
+            - 0.0.0.0
+
+
