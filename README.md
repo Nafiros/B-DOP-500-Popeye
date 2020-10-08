@@ -69,7 +69,7 @@ This build create a volumes named db-data. If you already have one on your machi
 
 1. Clone the repo
 ```sh
-git clone git@github.com:Nafiros/B-DOP-500-Popeye-Bootstrap.git
+git clone git@github.com:Nafiros/B-DOP-500-Popeye.git
 ```
 2. Build images and start with Docker (at the root of the repo)
 ```sh
