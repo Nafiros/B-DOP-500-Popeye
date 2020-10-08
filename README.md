@@ -73,7 +73,7 @@ git clone git@github.com:Nafiros/B-DOP-500-Popeye.git
 ```
 2. Build images and start with Docker (at the root of the repo)
 ```sh
-docker-compose up
+docker-compose up --build
 ```
 
 
