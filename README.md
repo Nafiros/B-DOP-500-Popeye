@@ -20,9 +20,9 @@
     Popeye - Get more from Docker
     <br />
     <br />
-    <a href="https://github.com/Nafiros/B-DOP-500-Popeye-Bootstrap/issues">Report Bug</a>
+    <a href="https://github.com/Nafiros/B-DOP-500-Popeye/issues">Report Bug</a>
     ·
-    <a href="https://github.com/Nafiros/B-DOP-500-Popeye-Bootstrap/issues">Request Feature</a>
+    <a href="https://github.com/Nafiros/B-DOP-500-Popeye/issues">Request Feature</a>
   </p>
 </p>
 
